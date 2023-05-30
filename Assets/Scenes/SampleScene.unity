@@ -522,7 +522,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fc7245d063e406441a45547dc290c9c3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -638,6 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  maxForwardSpeed: 8
 --- !u!1001 &1509146729923077739
 PrefabInstance:
   m_ObjectHideFlags: 0
