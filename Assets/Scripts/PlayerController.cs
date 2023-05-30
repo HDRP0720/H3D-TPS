@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-  [SerializeField] private float moveSpeed = 2f;
+  // [SerializeField] private float moveSpeed = 2f;
   [SerializeField] private float maxForwardSpeed = 8f;
   [SerializeField] private float turnSpeed = 100f; 
 
@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
   private const float groundDecel = 25f;
 
   private Vector2 moveDirection;
+  private float jumpDirection;
+
   private Animator animator;
 
   bool IsMoveInput
@@ -30,13 +32,8 @@ public class PlayerController : MonoBehaviour
   private void Update()
   {
     Move(moveDirection);
-  }
-
-  // For unity event of input system
-  public void OnMove(InputAction.CallbackContext context)
-  {
-    moveDirection = context.ReadValue<Vector2>();
-  }
+    Jump(jumpDirection);
+  }  
 
   private void Move(Vector2 direction)
   {
@@ -51,8 +48,21 @@ public class PlayerController : MonoBehaviour
     forwardSpeed = Mathf.MoveTowards(forwardSpeed, desiredSpeed, acceleration * Time.deltaTime);
     animator.SetFloat("ForwardSpeed", forwardSpeed);
 
-    transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+    transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);  
+  }
 
-    // transform.Translate(direction.x * moveSpeed * Time.deltaTime, 0, direction.y * moveSpeed * Time.deltaTime);
+  private void Jump(float direction)
+  {
+    Debug.Log(direction);
+  }
+
+  // For unity event of input system
+  public void OnMove(InputAction.CallbackContext context)
+  {
+    moveDirection = context.ReadValue<Vector2>();
+  }
+  public void OnJump(InputAction.CallbackContext context)
+  {
+    jumpDirection = context.ReadValue<float>();
   }
 }
