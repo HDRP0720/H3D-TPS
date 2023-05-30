@@ -51,10 +51,18 @@ public class PlayerController : MonoBehaviour
     transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);  
   }
 
+  bool readyJump = false;
   private void Jump(float direction)
   {
     if(direction > 0)
+    {
       animator.SetBool("ReadyJump", true);
+      readyJump = true;
+    }      
+    else if(readyJump)
+    {
+      animator.SetBool("Launch", true);
+    }      
   }
 
   // For unity event of input system
