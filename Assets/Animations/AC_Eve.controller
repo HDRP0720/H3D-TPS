@@ -35,6 +35,33 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 603ef75fade5b224c9f6805c764fbb67,
+      type: 3}
+    m_Threshold: -10
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: -2
+    m_CycleOffset: 0
+    m_DirectBlendParameter: ForwardSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 603ef75fade5b224c9f6805c764fbb67,
+      type: 3}
+    m_Threshold: -8.3756895
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: ForwardSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 2cccad28607d342489d058d86d5e4c3e,
+      type: 3}
+    m_Threshold: -5.15
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: ForwardSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: 0cd218210745a83499993f981897b82e,
       type: 3}
     m_Threshold: 0
@@ -46,7 +73,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: 2cccad28607d342489d058d86d5e4c3e,
       type: 3}
-    m_Threshold: 1.47
+    m_Threshold: 4.88
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -55,7 +82,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: 603ef75fade5b224c9f6805c764fbb67,
       type: 3}
-    m_Threshold: 7.3
+    m_Threshold: 7.016574
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -72,7 +99,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: ForwardSpeed
   m_BlendParameterY: Blend
-  m_MinThreshold: 0
+  m_MinThreshold: -10
   m_MaxThreshold: 10
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
@@ -139,7 +166,7 @@ AnimatorStateMachine:
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 5592942301688612803}
-    m_Position: {x: 360, y: 110, z: 0}
+    m_Position: {x: 330, y: 120, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
