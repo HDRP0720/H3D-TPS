@@ -11,6 +11,8 @@
   * Female Tough Walk
   * Walking Backwards
   * Running Backward
+  * Jump
+  * Falling Idle
 
 # Asset 관리
 Assets/AssetPack 폴더에서 유료 라이센스 에셋들 관리

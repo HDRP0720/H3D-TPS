@@ -53,7 +53,8 @@ public class PlayerController : MonoBehaviour
 
   private void Jump(float direction)
   {
-    Debug.Log(direction);
+    if(direction > 0)
+      animator.SetBool("ReadyJump", true);
   }
 
   // For unity event of input system
