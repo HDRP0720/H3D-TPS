@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
 {
   // [SerializeField] private float moveSpeed = 2f;
   [SerializeField] private float maxForwardSpeed = 8f;
-  [SerializeField] private float turnSpeed = 100f; 
+  [SerializeField] private float turnSpeed = 100f;
+  [SerializeField] private float jumpSpeed = 30000f;
 
   private float desiredSpeed;
   private float forwardSpeed;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
   private float jumpDirection;
 
   private Animator animator;
+  private Rigidbody rb;
 
   bool IsMoveInput
   {
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
   private void Start() 
   {
     animator = GetComponent<Animator>();
+    rb = GetComponent<Rigidbody>();
   }
   private void Update()
   {
@@ -61,8 +64,16 @@ public class PlayerController : MonoBehaviour
     }      
     else if(readyJump)
     {
-      animator.SetBool("Launch", true);
+      animator.SetBool("Launch", true);    
     }      
+  }
+
+  // Animation event function
+  public void Launch()
+  {
+    rb.AddForce(0, jumpSpeed, 0);
+    animator.SetBool("Launch", false);
+    animator.applyRootMotion = false;
   }
 
   // For unity event of input system
