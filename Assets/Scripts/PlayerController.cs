@@ -4,11 +4,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{
-  // [SerializeField] private float moveSpeed = 2f;
+{ 
+  [Tooltip("캐릭터가 도달할 수 있는 달리기 최고 속력 파라미터")]
   [SerializeField] private float maxForwardSpeed = 8f;
+
+  [Tooltip("캐릭터 회전 속력 파라미터")]
   [SerializeField] private float turnSpeed = 100f;
+
+  [Tooltip("캐릭터 점프에 따른 높이값 조절 파라미터")]
   [SerializeField] private float jumpSpeed = 30000f;
+
+  [Tooltip("랜딩 애니메이션 시작 기준 지점을 정하기 위한 레이캐스팅 위치 조절 파라미터")]
+  [SerializeField] private float groundRayDist = 1f;
 
   private float desiredSpeed;
   private float forwardSpeed;
@@ -21,8 +28,9 @@ public class PlayerController : MonoBehaviour
 
   private Animator animator;
   private Rigidbody rb;
+  private bool isOnGround = true; 
 
-  bool IsMoveInput
+  public bool IsMoveInput
   {
     get { return !Mathf.Approximately(moveDirection.sqrMagnitude, 0f); }
   }
@@ -34,8 +42,25 @@ public class PlayerController : MonoBehaviour
   }
   private void Update()
   {
+    Debug.Log(jumpDirection);
     Move(moveDirection);
     Jump(jumpDirection);
+
+    RaycastHit hit;
+    Ray ray = new Ray(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up);
+    if(Physics.Raycast(ray, out hit, groundRayDist))
+    {
+      if(!isOnGround)
+      {
+        isOnGround = true;
+        animator.SetBool("Land", true);
+      }
+      else
+      {
+        isOnGround = false;
+      }
+    }
+    Debug.DrawRay(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up * groundRayDist, Color.red);
   }  
 
   private void Move(Vector2 direction)
@@ -57,14 +82,17 @@ public class PlayerController : MonoBehaviour
   bool readyJump = false;
   private void Jump(float direction)
   {
-    if(direction > 0)
+    if(direction > 0 && isOnGround)
     {
       animator.SetBool("ReadyJump", true);
       readyJump = true;
+      
     }      
     else if(readyJump)
     {
-      animator.SetBool("Launch", true);    
+      animator.SetBool("Launch", true);
+      readyJump = false;
+      animator.SetBool("ReadyJump", false);
     }      
   }
 
@@ -74,6 +102,11 @@ public class PlayerController : MonoBehaviour
     rb.AddForce(0, jumpSpeed, 0);
     animator.SetBool("Launch", false);
     animator.applyRootMotion = false;
+  }
+  public void Land()
+  {
+    animator.SetBool("Land", false);
+    animator.applyRootMotion = true;
   }
 
   // For unity event of input system
