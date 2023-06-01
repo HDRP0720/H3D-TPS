@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
       if(!isOnGround)
       {
         isOnGround = true;
+        animator.SetFloat("LandingVelocity", rb.velocity.magnitude);
         animator.SetBool("Land", true);
       }      
     }
@@ -78,26 +79,29 @@ public class PlayerController : MonoBehaviour
     transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);  
   }
 
-  bool readyJump = false; 
+  bool readyJump = false;
+  float jumpEffort = 0;
   private void Jump(float direction)
   {
     if(direction > 0 && isOnGround)
     {
       animator.SetBool("ReadyJump", true);
-      readyJump = true;       
+      readyJump = true;
+      jumpEffort += Time.deltaTime;    
     }      
     else if(readyJump)
     {
       animator.SetBool("Launch", true);
       readyJump = false;
       animator.SetBool("ReadyJump", false);
-    }   
+    }
+    Debug.Log("Jump Effort: " + jumpEffort);
   }
 
   // Animation event function
   public void Launch()
   {
-    rb.AddForce(0, jumpSpeed, 0);
+    rb.AddForce(0, jumpSpeed * Mathf.Clamp(jumpEffort, 1, 3) , 0);
     animator.SetBool("Launch", false);
     animator.applyRootMotion = false;
   }
@@ -106,6 +110,7 @@ public class PlayerController : MonoBehaviour
     animator.SetBool("Land", false);
     animator.applyRootMotion = true;
     animator.SetBool("Launch", false);
+    jumpEffort = 0;
   }
 
   // For unity event of input system
