@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float jumpSpeed = 30000f;
 
   [Tooltip("랜딩 애니메이션 시작 기준 지점을 정하기 위한 레이캐스팅 위치 조절 파라미터")]
-  [SerializeField] private float groundRayDist = 1f;
+  [SerializeField] private float groundRayDist = 2f;
 
   private float desiredSpeed;
   private float forwardSpeed;
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
   private Animator animator;
   private Rigidbody rb;
-  private bool isOnGround = true; 
+  private bool isOnGround = true;
 
   public bool IsMoveInput
   {
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
   }
   private void Update()
   {
-    Debug.Log(jumpDirection);
     Move(moveDirection);
     Jump(jumpDirection);
 
@@ -54,12 +53,12 @@ public class PlayerController : MonoBehaviour
       {
         isOnGround = true;
         animator.SetBool("Land", true);
-      }
-      else
-      {
-        isOnGround = false;
-      }
+      }      
     }
+    else
+    {
+      isOnGround = false;
+    }    
     Debug.DrawRay(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up * groundRayDist, Color.red);
   }  
 
@@ -79,21 +78,20 @@ public class PlayerController : MonoBehaviour
     transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);  
   }
 
-  bool readyJump = false;
+  bool readyJump = false; 
   private void Jump(float direction)
   {
     if(direction > 0 && isOnGround)
     {
       animator.SetBool("ReadyJump", true);
-      readyJump = true;
-      
+      readyJump = true;       
     }      
     else if(readyJump)
     {
       animator.SetBool("Launch", true);
       readyJump = false;
       animator.SetBool("ReadyJump", false);
-    }      
+    }   
   }
 
   // Animation event function
@@ -107,6 +105,7 @@ public class PlayerController : MonoBehaviour
   {
     animator.SetBool("Land", false);
     animator.applyRootMotion = true;
+    animator.SetBool("Launch", false);
   }
 
   // For unity event of input system
