@@ -54,11 +54,14 @@ public class PlayerController : MonoBehaviour
         isOnGround = true;
         animator.SetFloat("LandingVelocity", rb.velocity.magnitude);
         animator.SetBool("Land", true);
+        animator.SetBool("Falling", false);
       }      
     }
     else
     {
       isOnGround = false;
+      animator.SetBool("Falling", true);
+      animator.applyRootMotion = false;
     }    
     Debug.DrawRay(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up * groundRayDist, Color.red);
   }  
