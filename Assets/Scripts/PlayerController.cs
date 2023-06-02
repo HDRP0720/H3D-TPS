@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
   [Tooltip("랜딩 애니메이션 시작 기준 지점을 정하기 위한 레이캐스팅 위치 조절 파라미터")]
   [SerializeField] private float groundRayDist = 2f;
 
+  [SerializeField] private Transform weapon;
+  [SerializeField] private Transform rightHand;
+  [SerializeField] private Transform rightUpLeg;
+
   private float desiredSpeed;
   private float forwardSpeed;
 
@@ -114,6 +118,20 @@ public class PlayerController : MonoBehaviour
     animator.applyRootMotion = true;
     animator.SetBool("Launch", false);
     jumpEffort = 0;
+  }  
+  public void PickupGun()
+  {
+    weapon.SetParent(rightHand);
+    weapon.localPosition = new Vector3(-0.0095f, 0.0541f, 0.0261f);
+    weapon.localRotation = Quaternion.Euler(-76.42f, -139.677f, -102.302f);
+    weapon.localScale = new Vector3(1, 1, 1);
+  }
+  public void PutDownGun()
+  {
+    weapon.SetParent(rightUpLeg);
+    weapon.localPosition = new Vector3(-0.0095f, 0.0541f, 0.0261f);
+    weapon.localRotation = Quaternion.Euler(-76.42f, -139.677f, -102.302f);
+    weapon.localScale = new Vector3(1, 1, 1);
   }
 
   // For unity event of input system
