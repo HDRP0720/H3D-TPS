@@ -185,8 +185,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21732521}
-  m_LocalRotation: {x: 0.22975291, y: 0.000000016746096, z: -0.0000000039532173, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 1.891, z: -2}
+  m_LocalRotation: {x: 0.22975291, y: -0.000000016746089, z: 0.0000000039532155, w: 0.973249}
+  m_LocalPosition: {x: 0, y: 2, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -272,8 +272,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.22975291, y: 0.000000016746096, z: -0.0000000039532173, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 1.891, z: -2}
+  m_LocalRotation: {x: 0.22975291, y: -0.000000016746089, z: 0.0000000039532155, w: 0.973249}
+  m_LocalPosition: {x: 0, y: 2, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -523,7 +523,6 @@ GameObject:
   - component: {fileID: 1535492635}
   - component: {fileID: 1535492634}
   - component: {fileID: 1535492633}
-  - component: {fileID: 1535492636}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -561,7 +560,7 @@ MonoBehaviour:
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 2, z: -2}
   m_XDamping: 1
-  m_YDamping: 1
+  m_YDamping: 1.4
   m_ZDamping: 1.4
   m_AngularDampingMode: 0
   m_PitchDamping: 0
@@ -607,23 +606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1535492636
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535492631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
-  m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
-  m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1672907684
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ebd7f56a7e9ee4ca270762a52504f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForwardSpeed: 8
+  maxForwardSpeed: 10
   turnSpeed: 100
   jumpSpeed: 30000
   groundRayDist: 2
@@ -990,7 +972,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.16
-  m_Height: 1.34
+  m_Height: 1.33
   m_Direction: 1
   m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!54 &919132148848990737
@@ -1069,7 +1051,7 @@ PrefabInstance:
     - target: {fileID: 1403761378123622106, guid: 14caba889a3515a489f256e1bec74312,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.109
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1403761378123622106, guid: 14caba889a3515a489f256e1bec74312,
         type: 3}
