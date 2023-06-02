@@ -143,4 +143,13 @@ public class PlayerController : MonoBehaviour
   {
     jumpDirection = context.ReadValue<float>();
   }
+  public void OnFire(InputAction.CallbackContext context)
+  {    
+    if ((int)context.ReadValue<float>() == 1 && animator.GetBool("Armed"))
+      animator.SetTrigger("Fire");
+  }
+  public void OnArmed(InputAction.CallbackContext context)
+  {
+    animator.SetBool("Armed", !animator.GetBool("Armed"));
+  }
 }
