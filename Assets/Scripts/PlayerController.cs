@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{ 
+{
+  [Header("Parameter for character movements")]
   [Tooltip("캐릭터가 도달할 수 있는 달리기 최고 속력 파라미터")]
   [SerializeField] private float maxForwardSpeed = 8f;
 
@@ -17,9 +18,11 @@ public class PlayerController : MonoBehaviour
   [Tooltip("랜딩 애니메이션 시작 기준 지점을 정하기 위한 레이캐스팅 위치 조절 파라미터")]
   [SerializeField] private float groundRayDist = 2f;
 
+  [Header("Parameter for character animations")]
   [SerializeField] private Transform weapon;
   [SerializeField] private Transform rightHand;
   [SerializeField] private Transform rightUpLeg;
+  [SerializeField] private Transform spine;
 
   private float desiredSpeed;
   private float forwardSpeed;
@@ -29,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
   private Vector2 moveDirection;
   private float jumpDirection;
+
+  private Vector2 lookDirection;
+  private Vector2 prevLookDirection;  
 
   private Animator animator;
   private Rigidbody rb;
@@ -68,7 +74,12 @@ public class PlayerController : MonoBehaviour
       animator.applyRootMotion = false;
     }    
     Debug.DrawRay(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up * groundRayDist, Color.red);
-  }  
+  }
+  private void LateUpdate()
+  {
+    prevLookDirection += new Vector2(lookDirection.x, lookDirection.y);
+    spine.Rotate(-prevLookDirection.y, prevLookDirection.x, 0);
+  }
 
   private void Move(Vector2 direction)
   {
@@ -138,6 +149,10 @@ public class PlayerController : MonoBehaviour
   public void OnMove(InputAction.CallbackContext context)
   {
     moveDirection = context.ReadValue<Vector2>();
+  }
+  public void OnLook(InputAction.CallbackContext context)
+  {
+    lookDirection = context.ReadValue<Vector2>();
   }
   public void OnJump(InputAction.CallbackContext context)
   {
