@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private Transform rightUpLeg;
   [SerializeField] private Transform spine;
 
+  [Header("Parameter for mouse sensitivity")]
+  [SerializeField] private float xSensitivity = 0.5f;
+  [SerializeField] private float ySensitivity = 0.5f;
+
   private float desiredSpeed;
   private float forwardSpeed;
 
@@ -74,11 +78,15 @@ public class PlayerController : MonoBehaviour
       animator.applyRootMotion = false;
     }    
     Debug.DrawRay(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up * groundRayDist, Color.red);
-  }
+  }  
   private void LateUpdate()
   {
-    prevLookDirection += new Vector2(lookDirection.x, lookDirection.y);
-    spine.Rotate(-prevLookDirection.y, prevLookDirection.x, 0);
+    prevLookDirection += new Vector2(-lookDirection.y * ySensitivity, lookDirection.x * xSensitivity);
+    prevLookDirection.x = Mathf.Clamp(prevLookDirection.x, -30, 30);
+    prevLookDirection.y = Mathf.Clamp(prevLookDirection.y, -30, 60);
+
+    spine.localEulerAngles = prevLookDirection;
+    // spine.Rotate(-prevLookDirection.y, prevLookDirection.x, 0);
   }
 
   private void Move(Vector2 direction)
