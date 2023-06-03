@@ -42,13 +42,15 @@ public class PlayerController : MonoBehaviour
   private float jumpDirection;
 
   private Vector2 lookDirection;
-  private Vector2 prevLookDirection;
-
-  
+  private Vector2 prevLookDirection;  
 
   private Animator animator;
   private Rigidbody rb;
+
   private bool isOnGround = true;
+
+  private bool escapePressed = false;
+  private bool cursorIsLocked = true;  
 
   public bool IsMoveInput
   {
@@ -62,6 +64,8 @@ public class PlayerController : MonoBehaviour
   }
   private void Update()
   {
+    HandleCursorLock();
+
     Move(moveDirection);
     Jump(jumpDirection);
 
@@ -112,12 +116,31 @@ public class PlayerController : MonoBehaviour
   }  
   private void LateUpdate()
   {
-    prevLookDirection += new Vector2(-lookDirection.y * ySensitivity, lookDirection.x * xSensitivity);
-    prevLookDirection.x = Mathf.Clamp(prevLookDirection.x, -30, 30);
-    prevLookDirection.y = Mathf.Clamp(prevLookDirection.y, -30, 60);
+    if(animator.GetBool("Armed"))
+    {
+      prevLookDirection += new Vector2(-lookDirection.y * ySensitivity, lookDirection.x * xSensitivity);
+      prevLookDirection.x = Mathf.Clamp(prevLookDirection.x, -30, 30);
+      prevLookDirection.y = Mathf.Clamp(prevLookDirection.y, -30, 60);
 
-    spine.localEulerAngles = prevLookDirection;
-    // spine.Rotate(-prevLookDirection.y, prevLookDirection.x, 0);
+      spine.localEulerAngles = prevLookDirection;
+      // spine.Rotate(-prevLookDirection.y, prevLookDirection.x, 0);
+    }
+  }
+
+  private void HandleCursorLock()
+  {
+    if (escapePressed) cursorIsLocked = false;
+
+    if (cursorIsLocked)
+    {
+      Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
+    }
+    else
+    {
+      Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
+    }
   }
 
   private void Move(Vector2 direction)
@@ -205,5 +228,12 @@ public class PlayerController : MonoBehaviour
   public void OnArmed(InputAction.CallbackContext context)
   {
     animator.SetBool("Armed", !animator.GetBool("Armed"));
+  }
+  public void OnESC(InputAction.CallbackContext context)
+  {
+    if ((int)context.ReadValue<float>() == 1)
+      escapePressed = true;
+    else
+      escapePressed = false;
   }
 }
