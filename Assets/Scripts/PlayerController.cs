@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
   [Header("Parameter for character movements")]
   [Tooltip("캐릭터가 도달할 수 있는 달리기 최고 속력 파라미터")]
-  [SerializeField] private float maxForwardSpeed = 8f;
+  [SerializeField] private float maxForwardSpeed = 10f;
 
   [Tooltip("캐릭터 회전 속력 파라미터")]
   [SerializeField] private float turnSpeed = 100f;
@@ -18,17 +18,19 @@ public class PlayerController : MonoBehaviour
   [Tooltip("랜딩 애니메이션 시작 기준 지점을 정하기 위한 레이캐스팅 위치 조절 파라미터")]
   [SerializeField] private float groundRayDist = 2f;
 
-  [Header("Parameter for character animations")]
+  [Header("Parameters for character animations")]
   [SerializeField] private Transform weapon;
   [SerializeField] private Transform rightHand;
   [SerializeField] private Transform rightUpLeg;
   [SerializeField] private Transform spine;
 
-  [Header("Parameter for mouse sensitivity")]
+  [Header("Parameters for mouse sensitivity")]
   [SerializeField] private float xSensitivity = 0.5f;
   [SerializeField] private float ySensitivity = 0.5f;
 
+  [Header("Parameters for aiming gun")]
   [SerializeField] private LineRenderer lineRenderer;
+  [SerializeField] private GameObject crosshair;
 
   private float desiredSpeed;
   private float forwardSpeed;
@@ -66,17 +68,26 @@ public class PlayerController : MonoBehaviour
     if(animator.GetBool("Armed"))
     {
       lineRenderer.gameObject.SetActive(true);
+      crosshair.gameObject.SetActive(true);
 
       RaycastHit laserHit;
       Ray laserRay = new Ray(lineRenderer.transform.position, lineRenderer.transform.forward);
       if (Physics.Raycast(laserRay, out laserHit))
       {
         lineRenderer.SetPosition(1, lineRenderer.transform.InverseTransformPoint(laserHit.point));
+
+        Vector3 crosshairLocation = Camera.main.WorldToScreenPoint(laserHit.point);
+        crosshair.transform.position = crosshairLocation;
+      }
+      else
+      {
+        crosshair.gameObject.SetActive(false);
       }
     }
     else
     {
       lineRenderer.gameObject.SetActive(false);
+      crosshair.gameObject.SetActive(false);
     }    
 
     RaycastHit hit;
