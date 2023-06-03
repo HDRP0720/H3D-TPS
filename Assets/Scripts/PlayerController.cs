@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float xSensitivity = 0.5f;
   [SerializeField] private float ySensitivity = 0.5f;
 
+  [SerializeField] private LineRenderer lineRenderer;
+
   private float desiredSpeed;
   private float forwardSpeed;
 
@@ -38,7 +40,9 @@ public class PlayerController : MonoBehaviour
   private float jumpDirection;
 
   private Vector2 lookDirection;
-  private Vector2 prevLookDirection;  
+  private Vector2 prevLookDirection;
+
+  
 
   private Animator animator;
   private Rigidbody rb;
@@ -58,6 +62,22 @@ public class PlayerController : MonoBehaviour
   {
     Move(moveDirection);
     Jump(jumpDirection);
+
+    if(animator.GetBool("Armed"))
+    {
+      lineRenderer.gameObject.SetActive(true);
+
+      RaycastHit laserHit;
+      Ray laserRay = new Ray(lineRenderer.transform.position, lineRenderer.transform.forward);
+      if (Physics.Raycast(laserRay, out laserHit))
+      {
+        lineRenderer.SetPosition(1, lineRenderer.transform.InverseTransformPoint(laserHit.point));
+      }
+    }
+    else
+    {
+      lineRenderer.gameObject.SetActive(false);
+    }    
 
     RaycastHit hit;
     Ray ray = new Ray(transform.position + Vector3.up * groundRayDist * 0.5f, -Vector3.up);
